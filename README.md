@@ -45,13 +45,13 @@ Fixes linter errors using `google/gts` library.
 It first cleans `dist`, generates `dist` as part of `pretest`, and then runs `test`.
 After finishing running, it checks lint as `posttest`.
 
-[github-image]: https://github.com/the-redback/nodejs-ts-boilerplate/actions/workflows/build.yaml/badge.svg
-[github-url]: https://github.com/the-redback/nodejs-ts-boilerplate/actions
-[codecov-image]: https://codecov.io/gh/the-redback/nodejs-ts-boilerplate/branch/main/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/the-redback/nodejs-ts-boilerplate
+[github-image]: https://github.com/the-redback/nodejs-ts-express/actions/workflows/build.yaml/badge.svg
+[github-url]: https://github.com/the-redback/nodejs-ts-express/actions
+[codecov-image]: https://codecov.io/gh/the-redback/nodejs-ts-express/branch/main/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/the-redback/nodejs-ts-express
 [gts-image]: https://img.shields.io/badge/code%20style-google-blueviolet.svg
 [gts-url]: https://github.com/google/gts
-[snyk-image]: https://snyk.io/test/github/the-redback/nodejs-ts-boilerplate/badge.svg
-[snyk-url]: https://snyk.io/test/github/the-redback/nodejs-ts-boilerplate
-[license-image]: https://img.shields.io/github/license/the-redback/nodejs-ts-boilerplate
-[code-size-image]: https://img.shields.io/github/languages/code-size/the-redback/nodejs-ts-boilerplate
+[snyk-image]: https://snyk.io/test/github/the-redback/nodejs-ts-express/badge.svg
+[snyk-url]: https://snyk.io/test/github/the-redback/nodejs-ts-express
+[license-image]: https://img.shields.io/github/license/the-redback/nodejs-ts-express
+[code-size-image]: https://img.shields.io/github/languages/code-size/the-redback/nodejs-ts-express
