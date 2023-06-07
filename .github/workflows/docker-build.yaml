@@ -15,5 +15,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: false
-          tags: ${{ github.repository }}:latest
+          push: true
+          tags: {{GITHUB_REPOSITORY_OWNER}}/${{ github.repository }}:latest
