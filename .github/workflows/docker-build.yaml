@@ -21,4 +21,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: maruftuhin/${{ github.repository.name }}:latest
+          tags: maruftuhin/nodejs-ts-express:latest
