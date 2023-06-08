@@ -59,7 +59,7 @@ jobs:
         with:
           resource-group: ${{ env.RESOURCE_GROUP }}
           cluster-name: ${{ env.CLUSTER_NAME }}
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
         # admin: 'false'
         # use-kubelogin: 'true'
         id: login
@@ -83,5 +83,5 @@ jobs:
         with:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
-          images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+#          images: |
+#            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
