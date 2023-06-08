@@ -30,7 +30,7 @@ app.post(
     console.log('/api/express/tasks', msg);
     const secs = msg.split('.').length - 1;
 
-    console.log(' [x] Starting task: Waiting ',secs);
+    console.log(' [x] Starting task: Waiting ', secs);
     setTimeout(() => {
       console.log(' [x] Done');
     }, secs * 1000);
