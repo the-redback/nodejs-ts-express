@@ -2,7 +2,7 @@ import {createServer, IncomingMessage, ServerResponse} from 'http';
 
 const server = createServer(
   (request: IncomingMessage, response: ServerResponse) => {
-    response.end('Hello world!');
+    response.end('Hello world from updated code!');
   }
 );
 
