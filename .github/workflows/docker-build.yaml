@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 env:
 #  AZURE_CONTAINER_REGISTRY: MY_REGISTRY_NAME # set this to the name of your container registry
-  CONTAINER_REGISTRY: maruftuhin # set this to the name of your container registry
 #  PROJECT_NAME: MY_PROJECT_NAME              # set this to your project's name
   RESOURCE_GROUP: rg-endless-crawdad          # set this to the resource group containing your AKS cluster
   CLUSTER_NAME: cluster-regular-snapper              # set this to the name of your AKS cluster
@@ -100,11 +99,13 @@ jobs:
           renderEngine: "helm"
           helmChart: ${{ env.CHART_PATH }}
 #          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
-#          overrides: |
-#            image.tag:${{ steps.meta.outputs.tags }}
+          overrides: |
+            image.tag:${{ steps.meta.outputs.tags }}
           helm-version: "latest"
           releaseName: ${{ env.RELEASE_NAME }}
         id: bake
+
+
 
       # Deploys application based on manifest files from previous step
       - name: Deploy application
@@ -113,5 +114,4 @@ jobs:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
-#            {{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
-             ${{ steps.meta.outputs.tags }}
+            {{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
