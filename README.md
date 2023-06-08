@@ -45,6 +45,32 @@ Fixes linter errors using `google/gts` library.
 It first cleans `dist`, generates `dist` as part of `pretest`, and then runs `test`.
 After finishing running, it checks lint as `posttest`.
 
+## To test
+
+```bash
+curl -X POST localhost:3000/api/express/login -H 'Content-Type: application/json' -d '{"username":"user","password":"my_password"}'
+curl -X POST localhost:3000/api/express/tasks -H 'Content-Type: application/json' -d '{"msg":"wait 3s..."}'
+curl localhost:3000/api/express/send-msg
+curl localhost:3000/api/express/
+```
+
+```bash
+export APP_HOST=20.72.154.138
+or,
+export APP_HOST=localhost:3000
+curl -X POST ${APP_HOST}/api/express/login -H 'Content-Type: application/json' -d '{"username":"user","password":"my_password"}'
+curl -X POST ${APP_HOST}/api/express/tasks -H 'Content-Type: application/json' -d '{"msg":"wait 3s..."}'
+curl ${APP_HOST}/api/express/send-msg
+curl ${APP_HOST}/api/express/
+```
+
+Stress test,
+
+```bash
+repeat 100 { curl -X POST ${APP_HOST}/api/express/tasks -H 'Content-Type: application/json' -d '{"msg":"wait 3s..."}' --silent > /dev/null}
+
+```
+
 [github-image]: https://github.com/the-redback/nodejs-ts-express/actions/workflows/build.yaml/badge.svg
 [github-url]: https://github.com/the-redback/nodejs-ts-express/actions
 [codecov-image]: https://codecov.io/gh/the-redback/nodejs-ts-express/branch/main/graph/badge.svg
