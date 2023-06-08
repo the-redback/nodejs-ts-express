@@ -48,7 +48,7 @@ app.get(
   '/api/express/send-msg',
   (req: express.Request, res: express.Response) => {
     const data = {
-      msg: 'Hello from the other side!!',
+      msg: 'Hello from the other side!!!',
       time: Date().toString(),
     };
 
