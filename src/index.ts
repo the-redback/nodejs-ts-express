@@ -15,7 +15,7 @@ app.post('/login', (req: express.Request, res: express.Response) => {
     time: Date().toString(),
   };
 
-  console.log('/login',msg)
+  console.log('/login', msg);
   return res.send(msg);
 });
 
@@ -27,7 +27,7 @@ app.post('/tasks', (req: express.Request, res: express.Response) => {
 });
 
 app.get('/', (req: express.Request, res: express.Response) => {
-  console.log('/')
+  console.log('/');
   res.send('Hello World');
 });
 
