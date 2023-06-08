@@ -114,4 +114,5 @@ jobs:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
           images: |
-            {{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            ${{ steps.meta.outputs.tags }}
+#            {{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
