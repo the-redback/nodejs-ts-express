@@ -54,10 +54,10 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: [ "sleep","90" ]
+                command: [ "sleep","25" ]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      terminationGracePeriodSeconds: 101
+      terminationGracePeriodSeconds: 30
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
