@@ -15,9 +15,6 @@ env:
 
 jobs:
   build:
-    outputs:
-      docker-tags: ${{ steps.meta.outputs.tags }}
-      docker-labels: ${{ steps.meta.outputs.labels }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -84,7 +81,16 @@ jobs:
         # use-kubelogin: 'true'
         id: login
 
-      - run: echo 0. ${{ github.sha }} 1. ${{needs.build.outputs.docker-tags}} 2. ${{needs.build.outputs.docker-labels}}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            maruftuhin/nodejs-ts-express
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=sha
 
       # Runs Helm to create manifest files
       - name: Bake deployment
@@ -94,7 +100,7 @@ jobs:
           helmChart: ${{ env.CHART_PATH }}
 #          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
           overrides: |
-            image.tag:${{needs.build.outputs.docker-tags}}
+            image.tag:${{ steps.meta.outputs.tags }}
           helm-version: "latest"
           releaseName: ${{ env.RELEASE_NAME }}
         id: bake
