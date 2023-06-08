@@ -11,6 +11,7 @@ env:
 #  # If you bake using helm:
   CHART_PATH: ./helm-chart/                   # set this to the path to your helm file
 #  CHART_OVERRIDE_PATH: MY_OVERRIDE_FILES
+  RELEASE_NAME: node-js-express-
 
 jobs:
   build:
@@ -73,6 +74,7 @@ jobs:
 #          overrides: |
 #            replicas:2
           helm-version: "latest"
+          releaseName: ""
         id: bake
 
       # Deploys application based on manifest files from previous step
