@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/login', (req: express.Request, res: express.Response) => {
+app.post('/api/express/login', (req: express.Request, res: express.Response) => {
   const {username, password} = req.body;
   console.log('Login user: ', username, password);
   const msg = {
@@ -15,29 +15,29 @@ app.post('/login', (req: express.Request, res: express.Response) => {
     time: Date().toString(),
   };
 
-  console.log('/login', msg);
+  console.log('/api/express/login', msg);
   return res.send(msg);
 });
 
-app.post('/tasks', (req: express.Request, res: express.Response) => {
+app.post('/api/express/tasks', (req: express.Request, res: express.Response) => {
   const {msg} = req.body;
 
-  console.log('/tasks', msg);
+  console.log('/api/express/tasks', msg);
   return res.send(msg);
 });
 
-app.get('/', (req: express.Request, res: express.Response) => {
-  console.log('/');
+app.get('/api/express/', (req: express.Request, res: express.Response) => {
+  console.log('/api/express/');
   res.send('Hello World');
 });
 
-app.get('/send-msg', (req: express.Request, res: express.Response) => {
+app.get('/api/express/send-msg', (req: express.Request, res: express.Response) => {
   const data = {
     msg: 'Hello from the other side!!',
     time: Date().toString(),
   };
 
-  console.log('/send-msg', data);
+  console.log('/api/express/send-msg', data);
   res.send(data);
 });
 
