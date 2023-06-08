@@ -84,7 +84,7 @@ jobs:
         # use-kubelogin: 'true'
         id: login
 
-      - run: echo ${{needs.build.outputs.docker-tags}} ${{needs.build.outputs.docker-labels}}
+      - run: echo 0. ${{ github.sha }} 1. ${{needs.build.outputs.docker-tags}} 2. ${{needs.build.outputs.docker-labels}}
 
       # Runs Helm to create manifest files
       - name: Bake deployment
