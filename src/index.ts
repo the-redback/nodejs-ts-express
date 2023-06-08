@@ -41,7 +41,7 @@ app.post(
 
 app.get('/api/express/', (req: express.Request, res: express.Response) => {
   console.log('/api/express/');
-  res.send('foo, bar');
+  res.send('foo, bar 101 ');
 });
 
 app.get(
