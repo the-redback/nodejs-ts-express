@@ -50,3 +50,15 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Update appVersion
+        run: |
+            git_hash=$(git rev-parse --short "$GITHUB_SHA")
+            appVersion=$(cat ./helm-chart/Chart.yaml | grep appVersion: | awk '{print $2}')
+            sed -i "s/$appVersion/${GITHUB_REF##*/}-$git_hash/" ./helm-chart/Chart.yaml
+            
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Version updated
