@@ -55,7 +55,8 @@ jobs:
         run: |
             git_hash=$(git rev-parse --short "$GITHUB_SHA")
             appVersion=$(cat ./helm-chart/Chart.yaml | grep appVersion: | awk '{print $2}')
-            sed -i "s/$appVersion/${GITHUB_REF##*/}-$git_hash/" ./helm-chart/Chart.yaml
+            # sed -i "s/$appVersion/${GITHUB_REF##*/}-$git_hash/" ./helm-chart/Chart.yaml
+            sed -i "s/$appVersion/sha-$git_hash/" ./helm-chart/Chart.yaml
             
       - name: Commit and push changes
         uses: devops-infra/action-commit-push@v0.3
