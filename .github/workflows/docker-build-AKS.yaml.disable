@@ -1,0 +1,118 @@
+name: docker-build
+
+on: [push, pull_request]
+
+env:
+#  AZURE_CONTAINER_REGISTRY: MY_REGISTRY_NAME # set this to the name of your container registry
+#  PROJECT_NAME: MY_PROJECT_NAME              # set this to your project's name
+  RESOURCE_GROUP: rg-endless-crawdad          # set this to the resource group containing your AKS cluster
+  CLUSTER_NAME: cluster-regular-snapper              # set this to the name of your AKS cluster
+#  REGISTRY_URL: MY_REGISTRY_URL              # set this to the URL of your registry
+#  # If you bake using helm:
+  CHART_PATH: ./helm-chart/                   # set this to the path to your helm file
+#  CHART_OVERRIDE_PATH: MY_OVERRIDE_FILES
+  RELEASE_NAME: node-js-express
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            maruftuhin/nodejs-ts-express
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+#      # Use kubelogin to configure your kubeconfig for Azure auth
+#      - name: Set up kubelogin for non-interactive login
+#        uses: azure/use-kubelogin@v1
+#        with:
+#          kubelogin-version: 'v0.0.25'
+
+      # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        # admin: 'false'
+        # use-kubelogin: 'true'
+        id: login
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            maruftuhin/nodejs-ts-express
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=sha
+
+      # Runs Helm to create manifest files
+      - name: Bake deployment
+        uses: azure/k8s-bake@v2
+        with:
+          renderEngine: "helm"
+          helmChart: ${{ env.CHART_PATH }}
+#          overrideFiles: ${{ env.CHART_OVERRIDE_PATH }}
+#          overrides: |
+#            image.tag:${{ steps.meta.outputs.tags }}
+          helm-version: "latest"
+          releaseName: ${{ env.RELEASE_NAME }}
+        id: bake
+
+
+
+      # Deploys application based on manifest files from previous step
+      - name: Deploy application
+        uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          images: |
+            ${{ steps.meta.outputs.tags }}
+#            {{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }}
