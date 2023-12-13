@@ -1,0 +1,61 @@
+{ jsonId: '2009041029524650' }
+{ deviceId: '1234', jsonId: '2009041029524650' }
+DocumentClient {
+  options: { attrValue: 'S6' },
+  service: Service {
+    config: Config {
+      credentials: [SharedIniFileCredentials],
+      credentialProvider: [CredentialProviderChain],
+      region: 'us-east-1',
+      logger: null,
+      apiVersions: {},
+      apiVersion: null,
+      endpoint: 'dynamodb.us-east-1.amazonaws.com',
+      httpOptions: [Object],
+      maxRetries: undefined,
+      maxRedirects: 10,
+      paramValidation: true,
+      sslEnabled: true,
+      s3ForcePathStyle: false,
+      s3BucketEndpoint: false,
+      s3DisableBodySigning: true,
+      s3UsEast1RegionalEndpoint: 'legacy',
+      s3UseArnRegion: undefined,
+      computeChecksums: true,
+      convertResponseTypes: true,
+      correctClockSkew: false,
+      customUserAgent: null,
+      dynamoDbCrc32: true,
+      systemClockOffset: 0,
+      signatureVersion: 'v4',
+      signatureCache: true,
+      retryDelayOptions: {},
+      useAccelerateEndpoint: false,
+      clientSideMonitoring: false,
+      endpointDiscoveryEnabled: undefined,
+      endpointCacheSize: 1000,
+      hostPrefixEnabled: true,
+      stsRegionalEndpoints: 'legacy',
+      useFipsEndpoint: false,
+      useDualstackEndpoint: false,
+      token: null,
+      tokenProvider: [TokenProviderChain]
+    },
+    isGlobalEndpoint: false,
+    endpoint: Endpoint {
+      protocol: 'http:',
+      host: 'localhost:4567',
+      port: 4567,
+      hostname: 'localhost',
+      pathname: '/',
+      path: '/',
+      href: 'http://localhost:4567/'
+    },
+    _events: { apiCallAttempt: [Array], apiCall: [Array] },
+    MONITOR_EVENTS_BUBBLE: [Function: EVENTS_BUBBLE],
+    CALL_EVENTS_BUBBLE: [Function: CALL_EVENTS_BUBBLE],
+    _clientId: 4
+  },
+  attrValue: 'S6'
+}
+{ id: '1234-2009041029524650' }
